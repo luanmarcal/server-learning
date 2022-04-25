@@ -1,26 +1,51 @@
 const express = require(`express`)
 const path = require('path');
-
-//adicional
-const { json } = require('body-parser')
 const cors = require('cors')
-//end
-
-const mongoose = require(`mongoose`)
+const { json } = require('body-parser')
 
 const server = express()
-
-const port = 4001
+const mongoose = require(`mongoose`)
+const port = 4002
 
 server.use(json())
 server.use(cors())
 
-// server.get('/', (req, res) => {
-//     res.sendFile(path.join(__dirname, src, 'index.html'))
-// })
+let dummyCount = 0
+let temperatures = [];
 
 server.get('/', (req, res) => {
-    res.status(200).sendFile(path.join(__dirname, "views", "index.html"))
+    res.status(200).send(temperatures)
+})
+
+server.post('/', (req, res) => {
+    const request = req.body
+
+    const temperatureObject = {
+        id: dummyCount += 1,
+        temperature: request.temperature
+    }
+    temperatures.push(temperatureObject)
+    res.status(201).send();
+})
+
+server.delete('/', (req, res) => {
+    temperatures = [];
+    res.status(200).send()
+})
+
+server.put('/:value', (req, res) => {
+    const value = req.params.value
+    const id = req.query.id
+    console.log(`QUERY IS ${id} AND PARAMETER IS ${value}`)
+    
+    temperatures.map(temperature => {
+        if(temperature.id == id){
+            console.log(`FOUND ID ${id} CHANGING VALUE OF OBJECT`)
+            temperature.temperature = value
+        }
+    });
+
+    res.status(200).send()
 })
 
 async function main() {
