@@ -4,12 +4,17 @@ const Temperature = require('../models/Temperature')
 
 const expressValidator = require('express-validator')
 
+const UserSchema = require('../models/Users')
+const auth = require('../middlewares/auth')
+
 const validate = [
     expressValidator.check('temperature').isLength({min: 1}).withMessage('Field temperature can not be null'),
     expressValidator.check('temperature').isNumeric().withMessage('Field temperature should be a number')
 ]
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
+    
+
     Temperature.find().then(temperatures => {
         res.status(200).send(temperatures);
     }).catch(error => {
