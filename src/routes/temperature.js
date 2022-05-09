@@ -2,6 +2,10 @@ const express = require('express')
 const router = express.Router()
 const Temperature = require('../models/Temperature')
 
+const SECRET = 'luan';
+
+const jwt = require('jsonwebtoken')
+
 const expressValidator = require('express-validator')
 
 const UserSchema = require('../models/Users')
@@ -12,11 +16,21 @@ const validate = [
     expressValidator.check('temperature').isNumeric().withMessage('Field temperature should be a number')
 ]
 
-router.get('/', auth, (req, res) => {
-    
+function verifyJWT(req, res, next) {
+    const token = req.headers['x-access-token'];
+    jwt.verify(token, SECRET, (err, decoded) => {
+        if(err) return res.status(401).end();
 
+        res.userId = decoded.userId;
+        next();
+    })
+}
+
+router.get('/',verifyJWT, (req, res) => {
+    
     Temperature.find().then(temperatures => {
         res.status(200).send(temperatures);
+        
     }).catch(error => {
         res.status(500).send(error)
     })
@@ -49,6 +63,20 @@ router.post('/', [validate], (req, res) => {
         res.status(201).send(result)
     })
 })
+
+
+
+router.post('/login', auth, (req, res) => {
+
+    Temperature.find().then(temperatures => {
+        const token = jwt.sign({userId: 1}, SECRET, {expiresIn: 300})
+        return res.json({auth: true, token})
+
+    }).catch(error => {
+        res.status(404).end;
+    })
+})
+ 
 
 router.delete('/', (req, res) => {
     

@@ -3,6 +3,8 @@ const path = require('path');
 const cors = require('cors')
 const { json } = require('body-parser')
 
+const jwt = require('jsonwebtoken')
+
 const Temperature = require('./models/Temperature')
 
 const temperatures = require('./routes/temperature')

@@ -1,6 +1,4 @@
 const UserSchema = require('../models/Users')
-const user = 'luan';
-const pass = '123';
 
 const auth = (req, res, next) => {
 
@@ -9,6 +7,7 @@ const auth = (req, res, next) => {
         if(req.header('password') != user.password) {
             return res.status(401).send("ALGO DE ERRADO NÃO ESTA CERTO")
         }
+        
         console.log(user)
         next();
     })
