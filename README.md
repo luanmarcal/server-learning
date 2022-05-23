@@ -2,7 +2,8 @@
 # Exercises:
 1. Pesquisar sobre o que é JWT (Json Web Token) e Cookies para transporte de dados, descrever.
 
-        Json Web Tokens é um padrão de definição de um token no formato JSON para a troca de informações seguras. Os tokens são assinados usando um segredo privado ou uma chave pública/privada. Uma vez que os dados enviados pelo cliente tenham sido autenticados no servidor, este criará um token JWT assinado com um segredo interno da API e enviará este token de volta ao cliente o qual será necessário para possíveis acessos no futuro, sendo assim uma forma segura de validação.
+        Json Web Tokens é um padrão de definição de um token no formato JSON para a troca de informações seguras. Os tokens são assinados usando um segredo <br>
+        privado ou uma chave pública/privada. Uma vez que os dados enviados pelo cliente tenham sido autenticados no servidor, este criará um token JWT assinado com um segredo interno da API e enviará este token de volta ao cliente o qual será necessário para possíveis acessos no futuro, sendo assim uma forma segura de validação.
 
 2. Atualizar o sistema de autenticação básico da ultima aula para utilizar JWT. (Procurar tutoriais como por exemplo: https://www.luiztools.com.br/post/autenticacao-json-web-token-jwt-em-nodejs/) e implementar a sua solução.
 
